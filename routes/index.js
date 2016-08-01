@@ -24,6 +24,8 @@ router.post('/api/update', function(req, res, next) {
     var now = utils.now_utc();
     var duration = utils.difference_in_seconds(now, expires);
 
+    console.log('Pokemon will despawn in ' + duration + ' seconds.');
+
     redis_client.exists(redis_key, function(err, reply) {
       if (err) throw err;
 
