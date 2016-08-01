@@ -14,7 +14,7 @@ var get_map_link = function(lat, lng) {
 };
 
 var get_despawn_time = function(disappear_time) {
-  return utils.get_expiration_date(disappear_time).format("h:mm:ss A");
+  return utils.get_est_expiration_date(disappear_time).format("h:mm:ss A");
 };
 
 var send_groupme_message = function(text) {
