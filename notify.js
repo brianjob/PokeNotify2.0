@@ -2,6 +2,7 @@ var request = require('request');
 var api_url = 'https://api.groupme.com/v3/bots/post';
 var bot_id = process.env.BOT_ID;
 var pokemon_names = require('./pokemon_names.json');
+var notify_list = require('./pokemon_notify_list.json');
 var utils = require('./utils');
 
 var lookup_pokemon_name = function(pokemon_id) {
@@ -29,13 +30,24 @@ var send_groupme_message = function(text) {
   });
 };
 
-var notify = function(pokemon) {
-  var msg = 'A wild ' + lookup_pokemon_name(pokemon.pokemon_id) +
-  ' appeared at ' + get_map_link(pokemon.latitude, pokemon.longitude) +
-  ' and will remain until ' + get_despawn_time(pokemon.disappear_time);
+var do_notify = function(pokemon_name) {
+  if (notify_list.notify.split(',').indexOf(pokemon_name) === -1)
+    return false;
+  
+  return true;
+};
 
-  //send_groupme_message(msg);
-  console.log(msg);
+var notify = function(pokemon) {
+  var pokemon_name = lookup_pokemon_name(pokemon.pokemon_id);
+
+  if (do_notify(pokemon_name)) {
+    var msg = 'A wild ' + pokemon_name +
+    ' appeared at ' + get_map_link(pokemon.latitude, pokemon.longitude) +
+    ' and will remain until ' + get_despawn_time(pokemon.disappear_time);
+
+    //send_groupme_message(msg);
+    console.log(msg);
+  }
 };
 
 module.exports = notify;
