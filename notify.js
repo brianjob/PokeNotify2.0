@@ -1,4 +1,5 @@
 var request = require('request');
+var moment = require('moment-timezone');
 var api_url = 'https://api.groupme.com/v3/bots/post';
 var bot_id = process.env.BOT_ID;
 var pokemon_names = require('./pokemon_names.json');
@@ -14,7 +15,8 @@ var get_map_link = function(lat, lng) {
 };
 
 var get_despawn_time = function(disappear_time) {
-  return utils.unix_ts_to_date(disappear_time);
+  return moment(utils.unix_ts_to_date(disappear_time))
+  .tz('America/New_York').format("h:mm:ss A");
 };
 
 var send_groupme_message = function(text) {
