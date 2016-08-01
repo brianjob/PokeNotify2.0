@@ -45,7 +45,7 @@ var notify = function(pokemon) {
     ' appeared at ' + get_map_link(pokemon.latitude, pokemon.longitude) +
     ' and will remain until ' + get_despawn_time(pokemon.disappear_time);
 
-    //send_groupme_message(msg);
+    send_groupme_message(msg);
     console.log(msg);
   }
 };
