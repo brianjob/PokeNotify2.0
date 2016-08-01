@@ -20,9 +20,7 @@ router.post('/api/update', function(req, res, next) {
   if (type === 'pokemon') {
     var redis_key = message.spawnpoint_id;
     var redis_val = message;
-    var expires = utils.unix_ts_to_date(message.disappear_time);
-    var now = utils.now_utc();
-    var duration = utils.difference_in_seconds(now, expires);
+    var duration = utils.time_left_in_seconds(message.disappear_time);
 
     console.log('Pokemon will despawn in ' + duration + ' seconds.');
 
