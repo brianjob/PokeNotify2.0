@@ -23,7 +23,7 @@ var send_groupme_message = function(text) {
   var request = require('request');
   request.post({
     url: api_url,
-    body: {text: text, bot_id: bot_id }
+    body: JSON.stringify({text: text, bot_id: bot_id })
   }, function(error, response, body) {
     if (error) throw error;
     console.log(body);
