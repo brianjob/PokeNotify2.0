@@ -8,4 +8,4 @@
   var get_est_expiration_date = function(despawn_timestamp) {
     return moment.utc(despawn_timestamp * 1000).subtract(4, 'hours');
   };
-  module.exports.get_expiration_date = get_est_expiration_date;
+  module.exports.get_est_expiration_date = get_est_expiration_date;
