@@ -10,7 +10,7 @@ var lookup_pokemon_name = function(pokemon_id) {
 };
 
 var get_map_link = function(lat, lng) {
-  return 'http://www.google.com/maps/place/' + lat + ',' + lng;
+  return 'http://maps.google.com/maps/place/' + lat + '/@' + lon + ',' + '20' + 'z';
 };
 
 var get_despawn_time = function(disappear_time) {
