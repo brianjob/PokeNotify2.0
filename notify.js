@@ -1,4 +1,5 @@
 var request = require('request');
+var Twitter = require('twitter');
 var api_url = 'https://api.groupme.com/v3/bots/post';
 var bot_id = process.env.BOT_ID;
 var pokemon_names = require('./pokemon_names.json');
@@ -30,11 +31,31 @@ var send_groupme_message = function(text) {
   });
 };
 
+var send_tweet = function(text) {
+  var config = {
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key: process.env.TWITTER_ACCESS_TOKEN,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+  };
+  var client = new Twitter(config);
+  console.log(JSON.stringify(config));
+
+  client.post('statuses/update', {status: text}, function(error, tweet, response) {
+  if (!error) {
+    console.log(tweet);
+  } else {
+    console.error(error);
+  }
+});
+};
+
 var do_notify = function(pokemon_name) {
-  if (notify_list.notify.split(',').indexOf(pokemon_name) === -1)
-    return false;
-  
-  return true;
+  return notify_list.notify.split(',').indexOf(pokemon_name) !== -1;
+};
+
+var is_rare = function(pokemon_name) {
+  return notify_list.rares.split(',').indexOf(pokemon_name) !== -1;
 };
 
 var notify = function(pokemon) {
@@ -46,6 +67,11 @@ var notify = function(pokemon) {
     ' and will remain until ' + get_despawn_time(pokemon.disappear_time);
 
     send_groupme_message(msg);
+
+    if (is_rare(pokemon_name)) {
+      send_tweet(msg);
+    }
+
     console.log(msg);
   }
 };
