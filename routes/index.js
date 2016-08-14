@@ -37,6 +37,8 @@ router.post('/api/update', function(req, res, next) {
         });
       }
     });
+  } else {
+    res.sendStatus(200);
   }
 });
 
