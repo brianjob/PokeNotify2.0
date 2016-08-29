@@ -18,7 +18,7 @@ router.post('/api/update', function(req, res, next) {
   var type = req.body.type;
 
   if (type === 'pokemon') {
-    var redis_key = message.spawnpoint_id;
+    var redis_key = message.encounter_id;
     var redis_val = message;
     var duration = utils.time_left_in_seconds(message.disappear_time);
 
